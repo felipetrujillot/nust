@@ -8,9 +8,6 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    cloudflare: {
-      nodeCompat: true,
-    },
     preset: "cloudflare-module",
   },
   devtools: { enabled: true },
