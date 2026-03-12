@@ -8,51 +8,90 @@ const scrollTo = (id: string) => {
   }
 };
 
-const navLinks = [
-  { name: "Inicio", id: "inicio" },
-  { name: "Nosotros", id: "nosotros" },
-  { name: "Servicios", id: "servicios" },
-  { name: "Contáctanos", id: "contactanos" },
-];
-
-const cards = [
-  {
-    title: "Nuestra Flota",
-    description: "Buses modernos y cómodos para tu mejor viaje.",
-    image:
-      "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2069&auto=format&fit=crop",
+// Objeto principal unificado simulando la respuesta de un backend o CMS
+const pageData = ref({
+  brandName: "BusExpres",
+  hero: {
+    title: "Tu Viaje, Nuestra Pasión",
+    subtitle:
+      "Disfruta del confort, seguridad y puntualidad en cada kilómetro. Viaja con los mejores buses de la región.",
+    buttonText: "Descubre Más",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?q=80&w=2070&auto=format&fit=crop",
   },
-  {
-    title: "Conductores Expertos",
-    description: "Personal altamente capacitado y certificado.",
-    image:
-      "https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?q=80&w=2070&auto=format&fit=crop",
+  navLinks: [
+    { name: "Inicio", id: "inicio" },
+    { name: "Nosotros", id: "nosotros" },
+    { name: "Servicios", id: "servicios" },
+    { name: "Contáctanos", id: "contactanos" },
+  ],
+  sections: {
+    nosotros: {
+      title: "¿Quiénes Somos?",
+      description:
+        "Somos una empresa comprometida con brindarte la mejor experiencia de viaje. Contamos con décadas de experiencia uniendo destinos.",
+      cards: [
+        {
+          title: "Nuestra Flota",
+          description: "Buses modernos y cómodos para tu mejor viaje.",
+          image:
+            "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2069&auto=format&fit=crop",
+        },
+        {
+          title: "Conductores Expertos",
+          description: "Personal altamente capacitado y certificado.",
+          image:
+            "https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?q=80&w=2070&auto=format&fit=crop",
+        },
+        {
+          title: "Seguridad",
+          description: "Monitoreo 24/7 y altos estándares de seguridad.",
+          image:
+            "https://images.unsplash.com/photo-1629895240974-bc5db0c6bf75?q=80&w=1935&auto=format&fit=crop",
+        },
+      ],
+    },
+    servicios: {
+      title: "Nuestros Servicios",
+      description:
+        "Soluciones integrales de transporte pensadas para ti. Ya sea que viajes por negocios, placer o necesites enviar un paquete.",
+      items: [
+        {
+          icon: "🚐",
+          title: "Viajes Interprovinciales",
+          desc: "Rutas seguras y directas a nivel nacional con salidas diarias.",
+        },
+        {
+          icon: "🎒",
+          title: "Turismo Especial",
+          desc: "Alquiler de unidades para excursiones y viajes de turismo en grupo.",
+        },
+        {
+          icon: "📦",
+          title: "Envío de Encomiendas",
+          desc: "Servicio de carga y mensajería rápida, segura y económica.",
+        },
+      ],
+    },
+    contactanos: {
+      title: "Contáctanos",
+      description: "Encuentra nuestras oficinas principales y visítanos.",
+      office: {
+        title: "Oficina Central",
+        addressLine1: "Av. Principal 1234",
+        addressLine2: "Ciudad, Centro",
+        email: "contacto@busexpres.com",
+        phone: "+1 234 567 890",
+      },
+      mapUrl:
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15606.312953235653!2d-77.036667!3d-12.060155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8c69f880f05%3A0x6bba3b578c77174e!2sLima%2C%20Peru!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    },
   },
-  {
-    title: "Seguridad",
-    description: "Monitoreo 24/7 y altos estándares de seguridad.",
-    image:
-      "https://images.unsplash.com/photo-1629895240974-bc5db0c6bf75?q=80&w=1935&auto=format&fit=crop",
+  footer: {
+    slogan: "Conectando tus sueños, kilómetro a kilómetro.",
+    copy: "Todos los derechos reservados.",
   },
-];
-
-const services = [
-  {
-    icon: "🚐",
-    title: "Viajes Interprovinciales",
-    desc: "Rutas seguras y directas a nivel nacional con salidas diarias.",
-  },
-  {
-    icon: "🎒",
-    title: "Turismo Especial",
-    desc: "Alquiler de unidades para excursiones y viajes de turismo en grupo.",
-  },
-  {
-    icon: "📦",
-    title: "Envío de Encomiendas",
-    desc: "Servicio de carga y mensajería rápida, segura y económica.",
-  },
-];
+});
 </script>
 
 <template>
@@ -70,13 +109,13 @@ const services = [
           class="flex items-center gap-2 cursor-pointer"
           @click="scrollTo('inicio')"
         >
-          <span class="text-2xl font-bold text-blue-600 tracking-tighter"
-            >BusExpres</span
-          >
+          <span class="text-2xl font-bold text-blue-600 tracking-tighter">{{
+            pageData.brandName
+          }}</span>
         </div>
         <nav class="hidden md:flex gap-6">
           <button
-            v-for="link in navLinks"
+            v-for="link in pageData.navLinks"
             :key="link.id"
             @click="scrollTo(link.id)"
             class="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
@@ -113,7 +152,7 @@ const services = [
       >
         <div class="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?q=80&w=2070&auto=format&fit=crop"
+            :src="pageData.hero.backgroundImage"
             alt="Bus en la ruta"
             class="w-full h-full object-cover"
           />
@@ -126,17 +165,16 @@ const services = [
           <h1
             class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 animate-fade-in-up"
           >
-            Tu Viaje, Nuestra Pasión
+            {{ pageData.hero.title }}
           </h1>
           <p class="text-xl md:text-2xl text-gray-200 mb-10 max-w-2xl mx-auto">
-            Disfruta del confort, seguridad y puntualidad en cada kilómetro.
-            Viaja con los mejores buses de la región.
+            {{ pageData.hero.subtitle }}
           </p>
           <button
             @click="scrollTo('servicios')"
             class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105 shadow-lg text-lg"
           >
-            Descubre Más
+            {{ pageData.hero.buttonText }}
           </button>
         </div>
       </section>
@@ -146,17 +184,16 @@ const services = [
         <div class="container mx-auto px-4">
           <div class="text-center mb-16">
             <h2 class="text-4xl font-bold text-gray-900 mb-4">
-              ¿Quiénes Somos?
+              {{ pageData.sections.nosotros.title }}
             </h2>
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-              Somos una empresa comprometida con brindarte la mejor experiencia
-              de viaje. Contamos con décadas de experiencia uniendo destinos.
+              {{ pageData.sections.nosotros.description }}
             </p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div
-              v-for="(card, index) in cards"
+              v-for="(card, index) in pageData.sections.nosotros.cards"
               :key="index"
               class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-gray-100 group"
             >
@@ -183,17 +220,16 @@ const services = [
         <div class="container mx-auto px-4">
           <div class="mb-16">
             <h2 class="text-4xl font-bold text-gray-900 mb-4">
-              Nuestros Servicios
+              {{ pageData.sections.servicios.title }}
             </h2>
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-              Soluciones integrales de transporte pensadas para ti. Ya sea que
-              viajes por negocios, placer o necesites enviar un paquete.
+              {{ pageData.sections.servicios.description }}
             </p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div
-              v-for="(service, index) in services"
+              v-for="(service, index) in pageData.sections.servicios.items"
               :key="index"
               class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 flex flex-col items-center"
             >
@@ -211,9 +247,11 @@ const services = [
       <section id="contactanos" class="py-24 bg-white">
         <div class="container mx-auto px-4">
           <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-gray-900 mb-4">Contáctanos</h2>
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">
+              {{ pageData.sections.contactanos.title }}
+            </h2>
             <p class="text-lg text-gray-600">
-              Encuentra nuestras oficinas principales y visítanos.
+              {{ pageData.sections.contactanos.description }}
             </p>
           </div>
 
@@ -224,7 +262,9 @@ const services = [
             <div
               class="lg:w-1/3 p-10 flex flex-col justify-center bg-blue-600 text-white"
             >
-              <h3 class="text-2xl font-bold mb-6">Oficina Central</h3>
+              <h3 class="text-2xl font-bold mb-6">
+                {{ pageData.sections.contactanos.office.title }}
+              </h3>
 
               <div class="flex items-start gap-4 mb-6">
                 <svg
@@ -245,7 +285,10 @@ const services = [
                 <div>
                   <h4 class="font-semibold mb-1">Dirección</h4>
                   <p class="text-blue-100">
-                    Av. Principal 1234<br />Ciudad, Centro
+                    {{ pageData.sections.contactanos.office.addressLine1
+                    }}<br />{{
+                      pageData.sections.contactanos.office.addressLine2
+                    }}
                   </p>
                 </div>
               </div>
@@ -267,7 +310,9 @@ const services = [
                 </svg>
                 <div>
                   <h4 class="font-semibold mb-1">Email</h4>
-                  <p class="text-blue-100">contacto@busexpres.com</p>
+                  <p class="text-blue-100">
+                    {{ pageData.sections.contactanos.office.email }}
+                  </p>
                 </div>
               </div>
 
@@ -288,7 +333,9 @@ const services = [
                 </svg>
                 <div>
                   <h4 class="font-semibold mb-1">Teléfono</h4>
-                  <p class="text-blue-100">+1 234 567 890</p>
+                  <p class="text-blue-100">
+                    {{ pageData.sections.contactanos.office.phone }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -296,7 +343,7 @@ const services = [
             <!-- Map -->
             <div class="lg:w-2/3 min-h-[400px]">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15606.312953235653!2d-77.036667!3d-12.060155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8c69f880f05%3A0x6bba3b578c77174e!2sLima%2C%20Peru!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+                :src="pageData.sections.contactanos.mapUrl"
                 width="100%"
                 height="100%"
                 style="border: 0"
@@ -317,17 +364,17 @@ const services = [
         class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6"
       >
         <div class="flex flex-col items-center md:items-start">
-          <span class="text-2xl font-bold text-white tracking-tighter mb-2"
-            >BusExpres</span
-          >
+          <span class="text-2xl font-bold text-white tracking-tighter mb-2">{{
+            pageData.brandName
+          }}</span>
           <p class="text-sm text-gray-500">
-            Conectando tus sueños, kilómetro a kilómetro.
+            {{ pageData.footer.slogan }}
           </p>
         </div>
 
         <nav class="flex gap-6">
           <button
-            v-for="link in navLinks"
+            v-for="link in pageData.navLinks"
             :key="link.id"
             @click="scrollTo(link.id)"
             class="text-sm hover:text-white transition-colors"
@@ -337,8 +384,8 @@ const services = [
         </nav>
 
         <div class="text-sm text-gray-500">
-          &copy; {{ new Date().getFullYear() }} BusExpres. Todos los derechos
-          reservados.
+          &copy; {{ new Date().getFullYear() }} {{ pageData.brandName }}.
+          {{ pageData.footer.copy }}
         </div>
       </div>
     </footer>
