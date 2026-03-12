@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     cloudflare: {
       nodeCompat: true,
     },
-    preset: "cloudflare_module",
+    preset: "cloudflare-worker",
   },
   devtools: { enabled: true },
 });
